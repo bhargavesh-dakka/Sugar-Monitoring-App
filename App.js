@@ -107,8 +107,8 @@ export default function App() {
     <View style={[styles.appShell, { backgroundColor: appBackground }]}>
       <StatusBar
         style={selectedProfile ? 'dark' : 'light'}
-        translucent
-        backgroundColor="transparent"
+        translucent={false}
+        backgroundColor={appBackground}
       />
       {showIntro || !isReady || !isLogsReady ? (
         <IntroScreen />
