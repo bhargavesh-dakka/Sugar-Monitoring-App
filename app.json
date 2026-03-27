@@ -6,6 +6,11 @@
     "icon": "./assets/Logo.png",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "androidStatusBar": {
+      "backgroundColor": "#04140d",
+      "barStyle": "light-content",
+      "translucent": false
+    },
     "android": {
       "package": "com.bhargaveshdakka.sugarmonitoringapp",
       "adaptiveIcon": {

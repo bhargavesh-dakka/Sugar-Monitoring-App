@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -10,7 +9,6 @@ export function IntroScreen() {
     <View style={styles.screen}>
       <NativeIntroFallback />
       <IntroOverlay />
-      <StatusBar style="light" />
     </View>
   );
 }

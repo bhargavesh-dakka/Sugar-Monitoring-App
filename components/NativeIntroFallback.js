@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Easing, Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Animated, Easing, Image, StyleSheet, Text, View } from 'react-native';
 
 export function NativeIntroFallback() {
   const pulse = useRef(new Animated.Value(0)).current;
+  const spin = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.loop(
@@ -21,7 +22,16 @@ export function NativeIntroFallback() {
         }),
       ])
     ).start();
-  }, [pulse]);
+
+    Animated.loop(
+      Animated.timing(spin, {
+        toValue: 1,
+        duration: 1500,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      })
+    ).start();
+  }, [pulse, spin]);
 
   const scale = pulse.interpolate({
     inputRange: [0, 1],
@@ -33,8 +43,22 @@ export function NativeIntroFallback() {
     outputRange: [0.7, 1],
   });
 
+  const rotate = spin.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
+
   return (
     <View style={styles.nativeScene}>
+      <Animated.View
+        style={[
+          styles.orbitRing,
+          {
+            transform: [{ rotate }],
+            opacity,
+          },
+        ]}
+      />
       <Animated.View
         style={[
           styles.nativeBadge,
@@ -52,8 +76,9 @@ export function NativeIntroFallback() {
       </Animated.View>
       <Text style={styles.nativeFallbackTitle}>Sugar Monitoring App</Text>
       <Text style={styles.nativeFallbackText}>
-        Mobile fallback ready. The full 3D intro runs on Expo Web.
+        Preparing your local glucose workspace...
       </Text>
+      <ActivityIndicator size="small" color="#6ee7b7" style={styles.loader} />
     </View>
   );
 }
@@ -65,6 +90,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 24,
     backgroundColor: '#081018',
+  },
+  orbitRing: {
+    position: 'absolute',
+    width: 164,
+    height: 164,
+    borderRadius: 999,
+    borderWidth: 3,
+    borderColor: 'rgba(110,231,183,0.15)',
+    borderTopColor: '#6ee7b7',
+    borderRightColor: 'rgba(52,211,153,0.7)',
   },
   nativeBadge: {
     width: 120,
@@ -99,5 +134,8 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     textAlign: 'center',
     maxWidth: 320,
+  },
+  loader: {
+    marginTop: 14,
   },
 });
