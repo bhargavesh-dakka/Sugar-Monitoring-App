@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { BackHandler, Platform, StatusBar as NativeStatusBar, StyleSheet, View } from 'react-native';
+import { BackHandler, Platform, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import { IntroScreen } from './components/IntroScreen';
@@ -24,7 +24,6 @@ export default function App() {
     [profiles, selectedProfileId]
   );
   const appBackground = selectedProfile ? '#dcefe6' : '#0b0d12';
-  const androidTopInset = Platform.OS === 'android' ? (NativeStatusBar.currentHeight || 0) : 0;
 
   useEffect(() => {
     if (Platform.OS !== 'web') {
@@ -105,11 +104,11 @@ export default function App() {
   }, [selectedProfileId, showIntro]);
 
   return (
-    <View style={[styles.appShell, { backgroundColor: appBackground, paddingTop: androidTopInset }]}>
+    <View style={[styles.appShell, { backgroundColor: appBackground }]}>
       <StatusBar
         style={selectedProfile ? 'dark' : 'light'}
-        translucent={false}
-        backgroundColor={appBackground}
+        translucent
+        backgroundColor="transparent"
       />
       {showIntro || !isReady || !isLogsReady ? (
         <IntroScreen />

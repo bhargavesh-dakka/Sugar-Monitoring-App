@@ -3,6 +3,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   Image,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -134,7 +135,7 @@ function ProfileCard({
       <Text style={[styles.profileLabel, { fontSize: labelSize }]} numberOfLines={1}>
         {name}
       </Text>
-      <Text style={[styles.profileMeta, { fontSize: metaSize }]}>{initials}</Text>
+      {/* <Text style={[styles.profileMeta, { fontSize: metaSize }]}>{initials}</Text> */}
     </Pressable>
   );
 }
@@ -151,17 +152,17 @@ function AddProfileCard({ onPress, tileSize, labelSize, hintSize, plusSize }) {
   );
 }
 
-function FloatingAddButton({ onPress }) {
+function FloatingAddButton({ onPress, bottomOffset = 28 }) {
   return (
-    <Pressable style={styles.floatingButton} onPress={onPress}>
+    <Pressable style={[styles.floatingButton, { bottom: bottomOffset }]} onPress={onPress}>
       <Ionicons name="add" size={28} color="#ffffff" />
     </Pressable>
   );
 }
 
-function FloatingRemoveButton({ onPress }) {
+function FloatingRemoveButton({ onPress, bottomOffset = 28 }) {
   return (
-    <Pressable style={styles.floatingRemoveButton} onPress={onPress}>
+    <Pressable style={[styles.floatingRemoveButton, { bottom: bottomOffset }]} onPress={onPress}>
       <Ionicons name="close" size={26} color="#ffffff" />
     </Pressable>
   );
@@ -189,6 +190,9 @@ export function ProfilesScreen({ profiles, onAddProfile, onRemoveProfile, onSele
   const gridGap = isNarrow ? 18 : 28;
   const topPadding = isNarrow ? 28 : 48;
   const bottomPadding = isNarrow ? 28 : 48;
+  const floatingButtonsBottom = isNarrow
+    ? (Platform.OS === 'android' ? 92 : 88)
+    : (Platform.OS === 'android' ? 64 : 54);
 
   const openModal = () => setIsModalVisible(true);
   const openDeleteModal = () => {
@@ -295,8 +299,12 @@ export function ProfilesScreen({ profiles, onAddProfile, onRemoveProfile, onSele
         </View>
       </ScrollView>
 
-      {profiles.length > 0 ? <FloatingRemoveButton onPress={openDeleteModal} /> : null}
-      {profiles.length > 0 ? <FloatingAddButton onPress={openModal} /> : null}
+      {profiles.length > 0 ? (
+        <FloatingRemoveButton onPress={openDeleteModal} bottomOffset={floatingButtonsBottom} />
+      ) : null}
+      {profiles.length > 0 ? (
+        <FloatingAddButton onPress={openModal} bottomOffset={floatingButtonsBottom} />
+      ) : null}
 
       <Modal
         animationType="fade"
@@ -689,7 +697,6 @@ const styles = StyleSheet.create({
   floatingButton: {
     position: 'absolute',
     right: 24,
-    bottom: 28,
     width: 64,
     height: 64,
     borderRadius: 999,
@@ -705,7 +712,6 @@ const styles = StyleSheet.create({
   floatingRemoveButton: {
     position: 'absolute',
     left: 24,
-    bottom: 28,
     width: 64,
     height: 64,
     borderRadius: 999,

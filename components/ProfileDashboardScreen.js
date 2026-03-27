@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import {
   Image,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -344,7 +345,10 @@ export function ProfileDashboardScreen({
   const trendRows = buildTrendRows(logs);
 
   const shellWidth = Math.max(width - 24, 280);
-  const isNarrow = shellWidth < 360;
+  const fabBottomOffset =
+    width < 430
+      ? (Platform.OS === 'android' ? 88 : 74)
+      : (Platform.OS === 'android' ? 56 : 44);
 
   React.useEffect(() => {
     setProfileNameInput(profile?.name || '');
@@ -445,7 +449,7 @@ export function ProfileDashboardScreen({
               hint="Overall glucose average"
               icon="pulse-outline"
               color="#22c55e"
-              width={isNarrow ? '100%' : '49%'}
+              width="49%"
             />
             <KpiCard
               title="Pre/Post Avg"
@@ -453,7 +457,7 @@ export function ProfileDashboardScreen({
               hint="Pre meal / Post meal"
               icon="restaurant-outline"
               color="#f97316"
-              width={isNarrow ? '100%' : '49%'}
+              width="49%"
             />
           </View>
 
@@ -465,7 +469,7 @@ export function ProfileDashboardScreen({
         </View>
       </ScrollView>
 
-      <Pressable style={styles.fab} onPress={() => setIsModalVisible(true)}>
+      <Pressable style={[styles.fab, { bottom: fabBottomOffset }]} onPress={() => setIsModalVisible(true)}>
         <Ionicons name="add" size={22} color="#ffffff" />
       </Pressable>
 
@@ -687,7 +691,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 2,
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     justifyContent: 'space-between',
     gap: 8,
   },
@@ -894,7 +898,6 @@ const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
     right: 20,
-    bottom: 22,
     width: 64,
     height: 64,
     borderRadius: 999,
