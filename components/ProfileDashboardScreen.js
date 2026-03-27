@@ -11,6 +11,7 @@ import {
   TextInput,
   useWindowDimensions,
   View,
+  StatusBar,
 } from 'react-native';
 import { WeeklyReminderCard } from './WeeklyReminderCard';
 import { useProfileImagePicker } from '../hooks/useProfileImagePicker';
@@ -622,7 +623,7 @@ const styles = StyleSheet.create({
   content: {
     width: '100%',
     paddingHorizontal: 12,
-    paddingTop: 14,
+    paddingTop: Platform.OS === 'web' ? 14 : 20,
     paddingBottom: 120,
     alignItems: 'center',
   },

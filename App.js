@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { BackHandler, Platform, StyleSheet, View } from 'react-native';
+import { BackHandler, Platform, StyleSheet, View, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import { IntroScreen } from './components/IntroScreen';
@@ -104,7 +104,7 @@ export default function App() {
   }, [selectedProfileId, showIntro]);
 
   return (
-    <View style={[styles.appShell, { backgroundColor: appBackground }]}>
+    <SafeAreaView style={[styles.appShell, { backgroundColor: appBackground }]}>
       <StatusBar
         style={selectedProfile ? 'dark' : 'light'}
         translucent={false}
@@ -136,7 +136,7 @@ export default function App() {
           onSelectProfile={(profile) => setSelectedProfileId(profile.id)}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 
