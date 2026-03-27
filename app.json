@@ -7,15 +7,18 @@
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "android": {
+      "package": "com.bhargaveshdakka.sugarmonitoringapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/Logo.png",
         "backgroundColor": "#04140d"
       },
       "permissions": [
-        "POST_NOTIFICATIONS"
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "ios": {
+      "bundleIdentifier": "com.bhargaveshdakka.sugarmonitoringapp",
       "supportsTablet": true,
       "infoPlist": {
         "NSUserNotificationUsageDescription": "Sugar Monitoring App sends weekly reminders to check and log glucose levels."
@@ -32,6 +35,12 @@
           "photosPermission": "Sugar Monitoring App uses your photos so you can set a profile image."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "54232146-464e-4826-b84a-4a4083b75954"
+      }
+    },
+    "owner": "bhargaveshdakka"
   }
 }
