@@ -347,8 +347,8 @@ export function ProfileDashboardScreen({
   const shellWidth = Math.max(width - 24, 280);
   const fabBottomOffset =
     width < 430
-      ? (Platform.OS === 'android' ? 88 : 74)
-      : (Platform.OS === 'android' ? 56 : 44);
+      ? (Platform.OS === 'android' ? 100 : 100)
+      : (Platform.OS === 'android' ? 44 : 44);
 
   React.useEffect(() => {
     setProfileNameInput(profile?.name || '');

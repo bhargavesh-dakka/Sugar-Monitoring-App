@@ -40,6 +40,6 @@ const styles = StyleSheet.create({
     lineHeight: 44,
     maxWidth: 420,
     textAlign: 'center',
-    marginBottom: 30,
+    marginBottom: 100,
   },
 });
