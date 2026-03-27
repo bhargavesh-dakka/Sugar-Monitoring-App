@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Platform, StatusBar as NativeStatusBar, StyleSheet, View } from 'react-native';
+import { BackHandler, Platform, StatusBar as NativeStatusBar, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import { IntroScreen } from './components/IntroScreen';
@@ -82,6 +82,27 @@ export default function App() {
       setSelectedProfileId(null);
     }
   }, [profiles, selectedProfileId]);
+
+  useEffect(() => {
+    if (Platform.OS !== 'android') {
+      return undefined;
+    }
+
+    const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (showIntro) {
+        return true;
+      }
+
+      if (selectedProfileId) {
+        setSelectedProfileId(null);
+        return true;
+      }
+
+      return false;
+    });
+
+    return () => subscription.remove();
+  }, [selectedProfileId, showIntro]);
 
   return (
     <View style={[styles.appShell, { backgroundColor: appBackground, paddingTop: androidTopInset }]}>
