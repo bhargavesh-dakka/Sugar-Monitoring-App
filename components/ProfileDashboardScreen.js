@@ -345,6 +345,10 @@ export function ProfileDashboardScreen({
   const postAvg = average(postValues);
   const trendRows = buildTrendRows(logs);
 
+  const androidTopInset = Platform.OS === 'android' ? (StatusBar.currentHeight || 0) : 0;
+  const contentTopPadding = (Platform.OS === 'web' ? 14 : 20) + androidTopInset;
+  const menuTopPadding = 58 + androidTopInset;
+
   const shellWidth = Math.max(width - 24, 280);
   const fabBottomOffset =
     width < 430
@@ -413,7 +417,10 @@ export function ProfileDashboardScreen({
       <View style={styles.bgOrbOne} />
       <View style={styles.bgOrbTwo} />
 
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={[styles.content, { paddingTop: contentTopPadding }]}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={[styles.dashboardShell, { width: shellWidth }]}> 
           <View style={styles.headerRow}>
             <Pressable style={styles.backButton} onPress={onBack}>
@@ -480,7 +487,7 @@ export function ProfileDashboardScreen({
         visible={isMenuVisible}
         onRequestClose={() => setIsMenuVisible(false)}
       >
-        <Pressable style={styles.menuBackdrop} onPress={() => setIsMenuVisible(false)}>
+        <Pressable style={[styles.menuBackdrop, { paddingTop: menuTopPadding }]} onPress={() => setIsMenuVisible(false)}>
           <Pressable style={styles.menuCard} onPress={() => {}}>
             <Pressable style={styles.menuItem} onPress={openEditProfile}>
               <Ionicons name="create-outline" size={16} color="#0f172a" />
@@ -623,7 +630,6 @@ const styles = StyleSheet.create({
   content: {
     width: '100%',
     paddingHorizontal: 12,
-    paddingTop: Platform.OS === 'web' ? 14 : 20,
     paddingBottom: 120,
     alignItems: 'center',
   },
@@ -915,7 +921,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(15, 23, 42, 0.1)',
     alignItems: 'flex-end',
-    paddingTop: 58,
     paddingRight: 20,
   },
   menuCard: {

@@ -6,6 +6,7 @@ import {
   Platform,
   Pressable,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -188,7 +189,8 @@ export function ProfilesScreen({ profiles, onAddProfile, onRemoveProfile, onSele
   const plusSize = isNarrow ? 40 : 48;
   const iconSize = isNarrow ? 14 : 16;
   const gridGap = isNarrow ? 18 : 28;
-  const topPadding = isNarrow ? 28 : 48;
+  const androidTopInset = Platform.OS === 'android' ? (StatusBar.currentHeight || 0) : 0;
+  const topPadding = (isNarrow ? 28 : 48) + androidTopInset;
   const bottomPadding = isNarrow ? 28 : 48;
   const floatingButtonsBottom = isNarrow
     ? (Platform.OS === 'android' ? 92 : 88)
